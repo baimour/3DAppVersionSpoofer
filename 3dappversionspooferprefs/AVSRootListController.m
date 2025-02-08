@@ -35,7 +35,7 @@
 		_underLabel = [[UILabel alloc] initWithFrame:botFrame];
 		[_underLabel setNumberOfLines:4];
 		_underLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-		[_underLabel setText:@"\nSpoof Any App Version\n\n Created by 0xkuj"];
+		[_underLabel setText:@"\n伪装任何应用的版本\n\n 作者：0xkuj\n\n 汉化：Ponyln"];
 		[_underLabel setBackgroundColor:[UIColor clearColor]];
 		_underLabel.textColor = [UIColor grayColor];
 		_underLabel.textAlignment = NSTextAlignmentCenter;
@@ -74,20 +74,20 @@
 	}
 }
 
-/* default settings and repsring right after. files to be deleted are specified in this function */
+/* 默认 settings 和 repsring right after。 files to be deleted are specified in this function */
 -(void)defaultsettings:(PSSpecifier*)specifier {
-	UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"Confirmation"
-    									                    message:@"This will restore 3DAppVersionSpoofer Settings to default\nAre you sure?" 
+	UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"继续"
+    									                    message:@"这将会把插件恢复为默认值\n你确定要继续吗？" 
     														preferredStyle:UIAlertControllerStyleAlert];
 	/* prepare function for "yes" button */
-	UIAlertAction* OKAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault
+	UIAlertAction* OKAction = [UIAlertAction actionWithTitle:@"是的" style:UIAlertActionStyleDefault
     		handler:^(UIAlertAction * action) {
 				[[NSFileManager defaultManager] removeItemAtURL:[NSURL fileURLWithPath:SPOOF_VER_PLIST_WITH_PATH] error: nil];
     			[self reload];
-				UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Notice"
-				message:@"Settings restored to default\nPlease respring your device" 
+				UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示"
+				message:@"设置已重置为默认\n请注销你的设备" 
 				preferredStyle:UIAlertControllerStyleAlert];
-				UIAlertAction* DoneAction =  [UIAlertAction actionWithTitle:@"Respring" style:UIAlertActionStyleDefault
+				UIAlertAction* 已完成Action =  [UIAlertAction actionWithTitle:@"注销" style:UIAlertActionStyleDefault
     			handler:^(UIAlertAction * action) {
 					[self respring];
 				}];
@@ -95,11 +95,11 @@
 				[self presentViewController:alert animated:YES completion:nil];
 	}];
 	/* prepare function for "no" button" */
-	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style: UIAlertActionStyleCancel handler:^(UIAlertAction * action) { return; }];
+	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"暂不" style: UIAlertActionStyleCancel handler:^(UIAlertAction * action) { return; }];
 	/* actually assign those actions to the buttons */
 	[alertController addAction:OKAction];
     [alertController addAction:cancelAction];
-	/* present the dialog and wait for an answer */
+	/* present the dialog 和 wait for an answer */
 	[self presentViewController:alertController animated:YES completion:nil];
 	return;
 }
