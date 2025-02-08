@@ -37,7 +37,7 @@
 
 		_currentAppVersion = [self checkIfDefaultVersion:_currentAppVersion];
 		_currentiOSSpoofedVersion = [self checkIfDefaultVersion:_currentiOSSpoofedVersion];
-		PSSpecifier *bundleID = [PSSpecifier preferenceSpecifierNamed:[NSString stringWithFormat:@"Bundle ID: %@",[self specifier].identifier]
+		PSSpecifier *bundleID = [PSSpecifier preferenceSpecifierNamed:[NSString stringWithFormat:@"应用标识符: %@",[self specifier].identifier]
 						  target:self
 						  set:Nil
 						  get:Nil
@@ -45,7 +45,7 @@
 						  cell:PSStaticTextCell
 						  edit:Nil];
 
-		PSSpecifier *currentVersion = [PSSpecifier preferenceSpecifierNamed:[NSString stringWithFormat:@"Current Spoofed Version: %@", _currentAppVersion]
+		PSSpecifier *currentVersion = [PSSpecifier preferenceSpecifierNamed:[NSString stringWithFormat:@"当前伪装版本: %@", _currentAppVersion]
 						  target:self
 						  set:Nil
 						  get:Nil
@@ -53,7 +53,7 @@
 						  cell:PSStaticTextCell
 						  edit:Nil];
 
-		PSSpecifier *currentiOSVersion = [PSSpecifier preferenceSpecifierNamed:[NSString stringWithFormat:@"Current Spoofed iOS Version: %@", _currentiOSSpoofedVersion]
+		PSSpecifier *currentiOSVersion = [PSSpecifier preferenceSpecifierNamed:[NSString stringWithFormat:@"当前伪装iOS版本: %@", _currentiOSSpoofedVersion]
 						  target:self
 						  set:Nil
 						  get:Nil
@@ -61,7 +61,7 @@
 						  cell:PSStaticTextCell
 						  edit:Nil];
 
-		PSSpecifier *defaultAppVersion = [PSSpecifier preferenceSpecifierNamed:[NSString stringWithFormat:@"Default App Version: %@", [[NSBundle bundleWithIdentifier:[self specifier].identifier] infoDictionary][@"CFBundleShortVersionString"]]
+		PSSpecifier *defaultAppVersion = [PSSpecifier preferenceSpecifierNamed:[NSString stringWithFormat:@"默认应用版本: %@", [[NSBundle bundleWithIdentifier:[self specifier].identifier] infoDictionary][@"CFBundleShortVersionString"]]
 						  target:self
 						  set:Nil
 						  get:Nil
@@ -69,7 +69,7 @@
 						  cell:PSStaticTextCell
 						  edit:Nil];
 
-		PSSpecifier *groupCell = [PSSpecifier preferenceSpecifierNamed:@"Spoof App Version"
+		PSSpecifier *groupCell = [PSSpecifier preferenceSpecifierNamed:@"伪装应用版本"
 						  target:self
 						  set:Nil
 						  get:Nil
@@ -77,7 +77,7 @@
 						  cell:PSGroupCell
 						  edit:Nil];
 
-		PSSpecifier *versionToSpoof = [PSSpecifier preferenceSpecifierNamed:@"Spoof Version Number:"
+		PSSpecifier *versionToSpoof = [PSSpecifier preferenceSpecifierNamed:@"伪装应用版本:"
 						  target:self
 						  set:@selector(setPreferenceValueLocal:specifier:)
 						  get:@selector(readPreferenceValueLocal:)
@@ -85,7 +85,7 @@
 						  cell:PSEditTextCell
 						  edit:Nil];
 
-		PSSpecifier *iOSversionToSpoof = [PSSpecifier preferenceSpecifierNamed:@"Spoof iOS Version:"
+		PSSpecifier *iOSversionToSpoof = [PSSpecifier preferenceSpecifierNamed:@"伪装iOS版本:"
 						  target:self
 						  set:@selector(setPreferenceValueLocal:specifier:)
 						  get:@selector(readPreferenceValueLocal:)
@@ -94,7 +94,7 @@
 						  edit:Nil];
 
 		// i had to add readpreferencevaluelocal because without that, no changes are made using the setter.. idk why
-		PSSpecifier *spoofSwitchSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Experimental Spoofing"
+		PSSpecifier *spoofSwitchSpecifier = [PSSpecifier preferenceSpecifierNamed:@"测试版伪装"
                         target:self
                     	set:@selector(setPreferenceValueLocal:specifier:)
                         get:@selector(readPreferenceValueLocal:)
@@ -102,7 +102,7 @@
                         cell:PSSwitchCell
                         edit:Nil];
 		
-		PSSpecifier *defaultVersionButton = [PSSpecifier preferenceSpecifierNamed:@"Reset to Default Version" target:self set:Nil get:Nil detail:Nil cell:PSButtonCell edit:Nil];
+		PSSpecifier *defaultVersionButton = [PSSpecifier preferenceSpecifierNamed:@"重置为默认版本" target:self set:Nil get:Nil detail:Nil cell:PSButtonCell edit:Nil];
    		[defaultVersionButton setButtonAction:@selector(resetToDefaultVersion)];
 
 		[versionToSpoof setProperty:@YES forKey:PSEnabledKey];		
@@ -123,7 +123,7 @@
 }
 
 - (id)readPreferenceValueLocal:(PSSpecifier*)specifier {
-	if ([specifier.name isEqualToString:@"Experimental Spoofing"]) {
+	if ([specifier.name isEqualToString:@"测试版伪装"]) {
 		NSNumber *result = @(self.experimentalSpoofing);
 		return result;
 	}
@@ -148,11 +148,11 @@
 
 		for (NSDictionary *key in settings) {
 			if ([settings[key] isKindOfClass:[NSDictionary class]] && [settings[key][SPOOF_APP_BUNDLE_KEY] isEqualToString:[self specifier].identifier]) {
-				if ([specifier.name isEqualToString:@"Experimental Spoofing"]) {
+				if ([specifier.name isEqualToString:@"测试版伪装"]) {
 					[settings[key] setObject:value forKey:SPOOF_EXPERIMENTAL_KEY];
-				} else if ([specifier.name isEqualToString:@"Spoof iOS Version:"]) {
+				} else if ([specifier.name isEqualToString:@"伪装iOS版本:"]) {
 					[settings[key] setObject:value forKey:SPOOF_IOS_VERSION_KEY];
-				} else if ([specifier.name isEqualToString:@"Spoof Version Number:"]) {
+				} else if ([specifier.name isEqualToString:@"伪装应用版本:"]) {
 					[settings[key] setObject:value forKey:SPOOF_APP_VERSION_KEY];
 				}
 				//a match was found, nothing else to look for
